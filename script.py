@@ -17,15 +17,15 @@ def main():
     actors1 = get_actors_and_characters_from_title(title1, ia)
     actors2 = get_actors_and_characters_from_title(title2, ia)
 
-    # Find common actors
-    common_actors = set(actors1.keys()).intersection(set(actors2.keys()))
+    # Find common actors and sort them
+    common_actors = sorted(list(set(actors1.keys()).intersection(set(actors2.keys()))))
 
     if common_actors:
         print(f"Common actors between {title1} and {title2}:")
-        for actor in common_actors:
+        for idx, actor in enumerate(common_actors, 1):  # Start numbering from 1
             roles1 = actors1[actor]
             roles2 = actors2[actor]
-            print(f"{actor} played as {roles1} in {title1} and as {roles2} in {title2}.")
+            print(f"{idx}. {actor} played as {roles1} in {title1} and as {roles2} in {title2}.")
     else:
         print(f"No common actors found between {title1} and {title2}.")
 
