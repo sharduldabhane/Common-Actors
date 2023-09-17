@@ -1,31 +1,31 @@
 from imdb import IMDb
 
-def get_actors_from_title(title, ia):
-    """Return a set of actors from the given title."""
+def get_actors_and_characters_from_title(title, ia):
+    """Return a dictionary with actor names as keys and characters they played as values."""
     movie = ia.search_movie(title)[0]
     ia.update(movie, info=['full credits'])
-    actors = {cast['name'] for cast in movie.get('cast', [])}
-    return actors
+    actors_and_characters = {cast['name']: cast.currentRole for cast in movie.get('cast', [])}
+    return actors_and_characters
 
 def main():
     ia = IMDb()
 
-    # Get movie/tv show names from user
     title1 = input("Enter the name of the first movie/TV show: ").strip()
     title2 = input("Enter the name of the second movie/TV show: ").strip()
 
-    # Fetch actors
-    actors1 = get_actors_from_title(title1, ia)
-    actors2 = get_actors_from_title(title2, ia)
-
+    # Fetch actors and their roles
+    actors1 = get_actors_and_characters_from_title(title1, ia)
+    actors2 = get_actors_and_characters_from_title(title2, ia)
 
     # Find common actors
-    common_actors = actors1.intersection(actors2)
+    common_actors = set(actors1.keys()).intersection(set(actors2.keys()))
 
     if common_actors:
         print(f"Common actors between {title1} and {title2}:")
         for actor in common_actors:
-            print(actor)
+            roles1 = actors1[actor]
+            roles2 = actors2[actor]
+            print(f"{actor} played as {roles1} in {title1} and as {roles2} in {title2}.")
     else:
         print(f"No common actors found between {title1} and {title2}.")
 
