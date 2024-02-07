@@ -18,9 +18,8 @@ def main():
     actors2 = get_actors_and_characters_from_title(title2, ia)
 
     # Find common actors and sort them
-    common_actors = sorted(list(set(actors1.keys()).intersection(set(actors2.keys()))))
 
-    if common_actors:
+    if common_actors := sorted(list(set(actors1.keys()).intersection(set(actors2.keys())))):
         print(f"Common actors between {title1} and {title2}:")
         for idx, actor in enumerate(common_actors, 1):  # Start numbering from 1
             roles1 = actors1[actor]
